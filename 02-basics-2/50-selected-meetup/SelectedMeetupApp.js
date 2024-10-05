@@ -1,34 +1,21 @@
-import { defineComponent, ref, onMounted, onUpdated } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 import { getMeetup } from './meetupsService.ts'
 
 export default defineComponent({
   name: 'SelectedMeetupApp',
 
   setup() {
-    let meetupId = ref(1)
-    let selectedMeetup = ref(null)
-
-    onMounted(async () => {
-      try {
-        let response = await getMeetup(meetupId.value)
-        selectedMeetup.value = response.title
-      } catch (error) {
-        console.error(error)
-      }
-    })
-
-    onUpdated(async () => {
-      try {
-        let response = await getMeetup(meetupId.value)
-        selectedMeetup.value = response.title
-      } catch (error) {
-        console.error(error)
-      }
+    const meetupId = ref(1)
+    const selectedMeetupTitle = ref(null)
+    
+    watchEffect(async () => {
+      const response = await getMeetup(meetupId.value)
+      selectedMeetupTitle.value = response.title
     })
 
     return {
       meetupId,
-      selectedMeetup,
+      selectedMeetupTitle,
     }
   },
 
@@ -114,7 +101,7 @@ export default defineComponent({
 
       <div class="meetup-selector__cover">
         <div class="meetup-cover">
-          <h1 class="meetup-cover__title">{{ selectedMeetup }}</h1>
+          <h1 class="meetup-cover__title">{{ selectedMeetupTitle }}</h1>
         </div>
       </div>
 

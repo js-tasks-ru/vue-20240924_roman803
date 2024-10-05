@@ -4,11 +4,11 @@ export default defineComponent({
   name: 'CalculatorApp',
 
   setup() {
-    let firstOperand = ref(null)
-    let secondOperand = ref(null)
-    let operation = ref(null)
+    const firstOperand = ref(null)
+    const secondOperand = ref(null)
+    const operation = ref(null)
 
-    let result = computed(() => {
+    const result = computed(() => {
       switch(operation.value) {
         case 'sum':
           return firstOperand.value + secondOperand.value
