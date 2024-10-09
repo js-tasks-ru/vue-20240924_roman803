@@ -1,9 +1,28 @@
-import { defineComponent } from 'vue'
+import { ref, defineComponent, watchEffect, onUnmounted } from 'vue'
+
+function getLocalTime() {
+  return new Date().toLocaleTimeString(navigator.language, { timeStyle: 'medium' })
+}
 
 export default defineComponent({
   name: 'UiClock',
 
-  setup() {},
+  setup() {
+    const clock = ref(getLocalTime())
+    let timerId = null
 
-  template: `<div class="clock">10:12:02</div>`,
+    onUnmounted(() => clearInterval(timerId))
+
+    watchEffect(() => {
+      timerId = setInterval(() => {
+        clock.value = getLocalTime()
+      }, 1000)
+    })
+
+    return {
+      clock,
+    }
+  },
+
+  template: `<div class="clock">{{ clock }}</div>`,
 })
