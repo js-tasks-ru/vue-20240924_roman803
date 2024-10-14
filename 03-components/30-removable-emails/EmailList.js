@@ -1,4 +1,4 @@
-import { ref, defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 import EmailListItem from './EmailListItem.js'
 
 export default defineComponent({
@@ -24,7 +24,7 @@ export default defineComponent({
         :key="email"
         :email="email"
         :marked="isMarked"
-        @get-index="() => $emit('removeItem', index)"
+        @remove="$emit('removeItem', index)"
       />
     </ul>
   `,

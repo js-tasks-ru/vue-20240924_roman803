@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { toRef, defineComponent } from 'vue'
 import { UiAlert, UiContainer } from '@shgk/vue-course-ui'
 import MeetupAgenda from './MeetupAgenda.js'
 import MeetupDescription from './MeetupDescription.js'
@@ -26,7 +26,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const meetup = computed(() => props.meetup)
+    const meetup = toRef(() => props.meetup)
     return {
       meetup,
     }
@@ -35,7 +35,7 @@ export default defineComponent({
   template: `
     <div>
 
-      <MeetupCover v-bind="{ title: meetup.title, image: meetup.image }" />
+      <MeetupCover :title="meetup.title", :image="meetup.image" />
 
       <UiContainer>
         <div class="meetup">

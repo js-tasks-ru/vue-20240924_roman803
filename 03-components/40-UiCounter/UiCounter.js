@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { defineComponent, toRef } from 'vue'
 import { UiButton } from '@shgk/vue-course-ui'
 import './UiCounter.css'
 
@@ -17,17 +17,17 @@ export default defineComponent({
 
     min: {
       type: Number,
+      default: 0,
     },
 
     max: {
       type: Number,
+      default: Infinity,
     },
   },
 
   setup(props, { emit }) {
-    const count = computed(() => props.count)
-    const min = computed(() => props.min)
-    const max = computed(() => props.max)
+    const count = toRef(() => props.count)
 
     function handleChange(value) {
       emit('update:count', value)
@@ -35,8 +35,6 @@ export default defineComponent({
 
     return {
       count,
-      min,
-      max,
       handleChange,
     }
   },
@@ -45,7 +43,7 @@ export default defineComponent({
     <div class="counter">
       <UiButton
         aria-label="Decrement"
-        :disabled="count === 0 || count === min"
+        :disabled="count === min"
         :count
         @click="handleChange(count - 1)"
       >

@@ -1,4 +1,4 @@
-import { ref, defineComponent, watchEffect, onUnmounted } from 'vue'
+import { ref, defineComponent, onUnmounted } from 'vue'
 
 function getLocalTime() {
   return new Date().toLocaleTimeString(navigator.language, { timeStyle: 'medium' })
@@ -9,15 +9,11 @@ export default defineComponent({
 
   setup() {
     const clock = ref(getLocalTime())
-    let timerId = null
+    const timerId = setInterval(() => {
+      clock.value = getLocalTime()
+    }, 1000)
 
     onUnmounted(() => clearInterval(timerId))
-
-    watchEffect(() => {
-      timerId = setInterval(() => {
-        clock.value = getLocalTime()
-      }, 1000)
-    })
 
     return {
       clock,

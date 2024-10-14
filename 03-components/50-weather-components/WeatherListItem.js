@@ -1,22 +1,6 @@
 import { defineComponent } from 'vue'
 import './WeatherApp.css'
 
-function getIcon(icons, weatherData) {
-  return icons[weatherData.current.weather.id]
-}
-
-function determineNightOrDay(weatherData) {
-  const currentTime = weatherData.current.dt
-  if (
-    currentTime < weatherData.current.sunset
-    && currentTime > weatherData.current.sunrise
-  ) {
-    return false
-  }
-
-  return true
-}
-
 export default defineComponent({
   name: 'WeatherListItem',
 
@@ -25,22 +9,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-
-    icons: {
-      type: Object,
-      required: true,
-    }
-  },
-
-  setup() {
-    return {
-      getIcon,
-      determineNightOrDay,
-    }
   },
 
   template: `
-    <li class="weather-card" :class="{ 'weather-card--night': determineNightOrDay(weatherItem) }">
+    <li class="weather-card" :class="{ 'weather-card--night': weatherItem.isNight }">
       <div class="weather-alert" v-if="weatherItem.alert">
         <span class="weather-alert__icon">⚠️</span>
         <span class="weather-alert__description">
@@ -57,7 +29,7 @@ export default defineComponent({
       </div>
       <div class="weather-conditions">
         <div class="weather-conditions__icon" :title="weatherItem.current.weather.description">
-          {{ getIcon(icons, weatherItem) }}
+          {{ weatherItem.icon }}
         </div>
         <div class="weather-conditions__temp">
           {{ (weatherItem.current.temp -  273.15).toFixed(1) + ' °C' }}
