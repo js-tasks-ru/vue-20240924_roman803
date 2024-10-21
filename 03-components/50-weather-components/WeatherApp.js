@@ -1,4 +1,4 @@
-import { defineComponent, toRef } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { getWeatherData, WeatherConditionIcons } from './weather.service.ts'
 import './WeatherApp.css'
 import WeatherList from './WeatherList.js'
@@ -23,7 +23,7 @@ export default defineComponent({
       return true
     }
 
-    const weatherData = toRef(() => {
+    const weatherData = computed(() => {
       return getWeatherData().map(dataItem => {
         dataItem.icon = WeatherConditionIcons[dataItem.current.weather.id]
         dataItem.isNight = determineNightOrDay(dataItem)

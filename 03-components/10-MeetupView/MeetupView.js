@@ -35,7 +35,7 @@ export default defineComponent({
   template: `
     <div>
 
-      <MeetupCover :title="meetup.title", :image="meetup.image" />
+      <MeetupCover :title="meetup.title" :image="meetup.image" />
 
       <UiContainer>
         <div class="meetup">
@@ -52,7 +52,7 @@ export default defineComponent({
           </div>
           <div class="meetup__aside">
 
-            <MeetupInfo v-bind="{ organizer: meetup.organizer, place: meetup.place, date: meetup.date}"/>
+            <MeetupInfo :organizer="meetup.organizer" :place="meetup.place" :date="meetup.date" />
 
             <div class="meetup__aside-buttons"></div>
           </div>
