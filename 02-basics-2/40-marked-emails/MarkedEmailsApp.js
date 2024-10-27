@@ -36,22 +36,18 @@ export default defineComponent({
     const filter = ref('')
 
     const markedEmails = computed(() => {
-      const searchFilter = email => 
+      const searchFilter = email =>
         email.toLowerCase().includes(filter.value.toLowerCase()) && filter.value
 
-      let result = {}
-      emails.forEach((email, index) => {
-        result[`${index}`] = {
+      return emails.map((email) => {
+        return {
           value: email,
           isMarked: searchFilter(email)
         }
-      });
-
-      return result
+      })
     })
 
     return {
-      emails,
       filter,
       markedEmails,
     }
